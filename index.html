@@ -5,147 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>قمم لغتي</title>
 <style>
-body{
-font-family:Arial,sans-serif;
-background:#f3f7f5;
-margin:0;
-padding:20px;
-color:#222;
-}
-.container{
-max-width:700px;
-margin:auto;
-background:white;
-padding:25px;
-border-radius:20px;
-box-shadow:0 4px 15px rgba(0,0,0,.1);
-}
-h1{
-text-align:center;
-color:#246b45;
-font-size:32px;
-}
-.subtitle{
-text-align:center;
-color:#666;
-margin-bottom:30px;
-}
-.choice{
-display:block;
-width:100%;
-padding:18px;
-margin:15px 0;
-border:0;
-border-radius:14px;
-background:#246b45;
-color:white;
-font-size:20px;
-cursor:pointer;
-}
-.choice:hover{
-opacity:.9;
-}
-.passage{
-margin:20px 0;
-padding:18px;
-background:#eaf4ee;
-border-right:5px solid #246b45;
-border-radius:10px;
-line-height:1.9;
-font-size:18px;
-}
-.question{
-margin:25px 0;
-padding:18px;
-background:#f7faf8;
-border-radius:14px;
-}
-.question h3{
-margin-top:0;
-}
-.tag{
-display:inline-block;
-font-size:13px;
-color:#246b45;
-background:#dff1e6;
-padding:3px 10px;
-border-radius:20px;
-margin-bottom:8px;
-}
-label{
-display:block;
-padding:12px;
-margin:8px 0;
-background:white;
-border-radius:9px;
-cursor:pointer;
-}
-label:hover{
-background:#eaf4ee;
-}
-button{
-width:100%;
-padding:15px;
-border:0;
-border-radius:12px;
-background:#246b45;
-color:white;
-font-size:19px;
-cursor:pointer;
-margin-top:10px;
-}
-.back{
-background:#777;
-}
-#result{
-margin-top:20px;
-padding:18px;
-text-align:center;
-font-size:22px;
-font-weight:bold;
-border-radius:12px;
-}
-.nameBox{
-margin:20px 0 30px 0;
-}
-.nameBox label{
-display:block;
-margin-bottom:8px;
-font-weight:bold;
-color:#246b45;
-background:none;
-padding:0;
-cursor:default;
-}
-.nameBox input{
-width:100%;
-box-sizing:border-box;
-padding:14px;
-border:2px solid #246b45;
-border-radius:12px;
-font-size:18px;
-font-family:Arial,sans-serif;
-}
+body{font-family:Arial,sans-serif;background:#f3f7f5;margin:0;padding:20px;color:#222;}
+.container{max-width:700px;margin:auto;background:white;padding:25px;border-radius:20px;box-shadow:0 4px 15px rgba(0,0,0,.1);}
+h1{text-align:center;color:#246b45;font-size:32px;}
+.subtitle{text-align:center;color:#666;margin-bottom:30px;}
+.week{margin:18px 0;padding:14px;border:2px solid #dff1e6;border-radius:16px;background:#f7faf8;}
+.week h3{margin:0 0 6px;color:#246b45;text-align:center;}
+.choice{display:block;width:100%;padding:16px;margin:10px 0;border:0;border-radius:14px;background:#246b45;color:white;font-size:19px;cursor:pointer;}
+.choice:hover{opacity:.9;}
+.passage{margin:20px 0;padding:18px;background:#eaf4ee;border-right:5px solid #246b45;border-radius:10px;line-height:1.9;font-size:18px;}
+.question{margin:25px 0;padding:18px;background:#f7faf8;border-radius:14px;}
+.question h3{margin-top:0;}
+.tag{display:inline-block;font-size:13px;color:#246b45;background:#dff1e6;padding:3px 10px;border-radius:20px;margin-bottom:8px;}
+label{display:block;padding:12px;margin:8px 0;background:white;border-radius:9px;cursor:pointer;}
+label:hover{background:#eaf4ee;}
+button{width:100%;padding:15px;border:0;border-radius:12px;background:#246b45;color:white;font-size:19px;cursor:pointer;margin-top:10px;}
+.back{background:#777;}
+#result{margin-top:20px;padding:18px;text-align:center;font-size:22px;font-weight:bold;border-radius:12px;}
+.nameBox{margin:20px 0 30px 0;}
+.nameBox label{display:block;margin-bottom:8px;font-weight:bold;color:#246b45;background:none;padding:0;cursor:default;}
+.nameBox input{width:100%;box-sizing:border-box;padding:14px;border:2px solid #246b45;border-radius:12px;font-size:18px;font-family:Arial,sans-serif;}
 </style>
 </head>
 <body>
 <div class="container">
 <div id="home">
 <h1>📚 قمم لغتي</h1>
-<p class="subtitle">
-موقع تفاعلي لمادة لغتي الخالدة
-</p>
-<h2 style="text-align:center;">
-اختاري الصف الدراسي
-</h2>
-<button class="choice" onclick="startQuiz(1)">
-🌸 أول متوسط
-</button>
-<button class="choice" onclick="startQuiz(2)">
-🌷 ثاني متوسط
-</button>
+<p class="subtitle">موقع تفاعلي لمادة لغتي الخالدة</p>
+<h2 style="text-align:center;">اختاري الأسبوع والصف</h2>
+<div id="weeks"></div>
 </div>
-
 <div id="quizPage" style="display:none;">
 <h1 id="quizTitle"></h1>
 <div class="nameBox">
@@ -154,229 +43,125 @@ font-family:Arial,sans-serif;
 </div>
 <div class="passage" id="passageBox"></div>
 <form id="quizForm"></form>
-<button onclick="checkAnswers()" type="button">
-إظهار النتيجة ✅
-</button>
-<button onclick="goHome()" type="button" class="back">
-العودة لاختيار الصف
-</button>
+<button onclick="checkAnswers()" type="button">إظهار النتيجة ✅</button>
+<button onclick="goHome()" type="button" class="back">العودة للرئيسية</button>
 <div id="result"></div>
 </div>
 </div>
-
 <script>
-let currentGrade = 1;
+/* ضعي هنا رابط Google Apps Script بين علامتي التنصيص */
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbzsBRz5i81_ihVhIfnGRF_lg_JE4q3b_Qe1pvpMtRVqNBkSFH_GsaXPyETdqfCS-bvtCQ/exec";
+let sent = false, cur = null;
+const F="فهم قرائي",N="نحو",I="إملاء",K="خط";
+const Q=(tag,q,a,correct)=>({tag,q,a,correct});
 
-/* نص القراءة - أول متوسط */
-const firstGradePassage =
-"القراءة غذاء العقل، فهي تزيد معرفتنا وتوسع مداركنا. يحب أحمد القراءة كثيرًا، فهو يقرأ كل يوم قصة جديدة قبل النوم. وقد جعلته القراءة أكثر ذكاءً وثقة بنفسه.";
-
-/* أسئلة أول متوسط - متنوعة: فهم قرائي / نحو / إملاء / خط */
-const firstGrade = [
+/* ====== الأسابيع: الأقدم أولًا، وتظهر الأحدث في الأعلى ====== */
+const WEEKS = [
 {
-tag:"فهم قرائي",
-q:"ماذا يفعل أحمد كل يوم قبل النوم؟",
-a:["يشاهد التلفاز","يقرأ قصة جديدة","يلعب مع أصدقائه"],
-correct:1
+name:"الأسبوع ١",
+g1:{p:"القراءة غذاء العقل، فهي تزيد معرفتنا وتوسع مداركنا. يحب أحمد القراءة كثيرًا، فهو يقرأ كل يوم قصة جديدة قبل النوم. وقد جعلته القراءة أكثر ذكاءً وثقة بنفسه.",q:[
+Q(F,"ماذا يفعل أحمد كل يوم قبل النوم؟",["يشاهد التلفاز","يقرأ قصة جديدة","يلعب مع أصدقائه"],1),
+Q(F,"بم وصف النص فائدة القراءة؟",["تزيد المعرفة وتوسع المدارك","تسبب النعاس","تُتعب العينين فقط"],0),
+Q(F,"كيف جعلت القراءة أحمد بحسب النص؟",["أكثر خجلًا","أكثر نسيانًا","أكثر ذكاءً وثقة بنفسه"],2),
+Q(N,"ما نوع كلمة «القراءة» في «القراءة غذاء العقل»؟",["فعل","اسم","حرف"],1),
+Q(N,"«يقرأ أحمد كل يوم» - كلمة «يقرأ» فعل:",["ماضٍ","مضارع","أمر"],1),
+Q(I,"ما الكتابة الصحيحة لهذه الكلمة؟",["هاذا الكتاب","هذا الكتاب","هاذه الكتاب"],1),
+Q(I,"أي الكلمات الآتية كُتبت بشكل صحيح؟",["مدرسه جميلة","مدرسة جميلة","مدرستن جميلة"],1),
+Q(K,"أي حرف من الحروف الآتية لا يتصل بما بعده؟",["ب","د","ت"],1),
+Q(K,"كم عدد نقاط حرف «ث»؟",["واحدة","اثنتان","ثلاث"],2),
+Q(K,"أي الحروف الآتية له أكثر من صورة (شكل) واحدة عند الكتابة؟",["د","ع","ر"],1)]},
+g2:{p:"الصداقة الحقيقية كنزٌ لا يقدَّر بثمن، فالصديق الوفي يقف بجانبك في السراء والضراء، ويسعى دائمًا لمساعدتك دون انتظار مقابل. لذلك ينبغي على الإنسان أن يُحسن اختيار أصدقائه.",q:[
+Q(F,"بم وصف الكاتب الصداقة الحقيقية؟",["عبئًا ثقيلًا","كنزًا لا يقدَّر بثمن","أمرًا عاديًا"],1),
+Q(F,"متى يقف الصديق الوفي بجانبك بحسب النص؟",["في السراء فقط","في الضراء فقط","في السراء والضراء"],2),
+Q(F,"بم ينصح الكاتب في نهاية النص؟",["بعدم الثقة بأحد","بإحسان اختيار الأصدقاء","بالابتعاد عن الناس"],1),
+Q(N,"ما إعراب كلمة «كنزٌ» في «الصداقة كنزٌ»؟",["مبتدأ","خبر مرفوع","مفعول به"],1),
+Q(N,"«يسعى الصديق لمساعدتك» - الفعل «يسعى» فعل:",["ماضٍ","مضارع","أمر"],1),
+Q(I,"ما الكتابة الصحيحة لهمزة هذه الكلمة؟",["اصدقاء","أصدقاء","إصدقاء"],1),
+Q(I,"أي الكلمات الآتية كُتبت بألف لينة صحيحة؟",["مشى","مشا","مشاء"],0),
+Q(K,"أي حرف من الحروف الآتية لا يتصل بما بعده مطلقًا؟",["س","ر","م"],1),
+Q(K,"كم عدد نقاط حرف «ش»؟",["واحدة","اثنتان","ثلاث"],2),
+Q(K,"عند كتابة حرف الواو في وسط الكلمة، فإنه:",["يتصل بما قبله فقط","يتصل بما بعده فقط","يتصل بما قبله وبما بعده"],0)]}
 },
 {
-tag:"فهم قرائي",
-q:"بم وصف النص فائدة القراءة؟",
-a:["تزيد المعرفة وتوسع المدارك","تسبب النعاس","تُتعب العينين فقط"],
-correct:0
-},
-{
-tag:"فهم قرائي",
-q:"كيف جعلت القراءة أحمد بحسب النص؟",
-a:["أكثر خجلًا","أكثر نسيانًا","أكثر ذكاءً وثقة بنفسه"],
-correct:2
-},
-{
-tag:"نحو",
-q:"ما نوع كلمة «القراءة» في «القراءة غذاء العقل»؟",
-a:["فعل","اسم","حرف"],
-correct:1
-},
-{
-tag:"نحو",
-q:"«يقرأ أحمد كل يوم» - كلمة «يقرأ» فعل:",
-a:["ماضٍ","مضارع","أمر"],
-correct:1
-},
-{
-tag:"إملاء",
-q:"ما الكتابة الصحيحة لهذه الكلمة؟",
-a:["هاذا الكتاب","هذا الكتاب","هاذه الكتاب"],
-correct:1
-},
-{
-tag:"إملاء",
-q:"أي الكلمات الآتية كُتبت بشكل صحيح؟",
-a:["مدرسه جميلة","مدرسة جميلة","مدرستن جميلة"],
-correct:1
-},
-{
-tag:"خط",
-q:"أي حرف من الحروف الآتية لا يتصل بما بعده؟",
-a:["ب","د","ت"],
-correct:1
-},
-{
-tag:"خط",
-q:"كم عدد نقاط حرف «ث»؟",
-a:["واحدة","اثنتان","ثلاث"],
-correct:2
-},
-{
-tag:"خط",
-q:"أي الحروف الآتية له أكثر من صورة (شكل) واحدة عند الكتابة؟",
-a:["د","ع","ر"],
-correct:1
+name:"الأسبوع ٢",
+g1:{p:"في صباح يوم جميل، ذهبت سارة مع أسرتها إلى الحديقة. رأت الأزهار الملوّنة والطيور تغرّد على الأشجار، فشعرت بالسعادة. وحين عادت إلى البيت، كتبت في دفترها وصفًا جميلًا لما شاهدته.",q:[
+Q(F,"إلى أين ذهبت سارة مع أسرتها؟",["المدرسة","الحديقة","السوق"],1),
+Q(F,"بماذا شعرت سارة عند رؤية الأزهار والطيور؟",["بالخوف","بالسعادة","بالملل"],1),
+Q(F,"ماذا فعلت سارة عند عودتها إلى البيت؟",["نامت مباشرة","شاهدت التلفاز","كتبت وصفًا في دفترها"],2),
+Q(N,"الجملة «ذهبت سارة إلى الحديقة» جملة:",["اسمية","فعلية","شبه جملة"],1),
+Q(N,"المثنى (في حالة الرفع) من كلمة «زهرة» هو:",["زهرتان","زهراتان","زهرين"],0),
+Q(I,"ما الكتابة الصحيحة؟",["رات","رأت","رأة"],1),
+Q(I,"ما الكتابة الصحيحة لحرف الجر في: ذهبتُ ... المدرسة؟",["إلا","الى","إلى"],2),
+Q(K,"أي الحروف الآتية يُكتب بنقطتين فوق الحرف؟",["ب","ت","ث"],1),
+Q(K,"أي الحروف الآتية يُكتب بنقطة واحدة تحت الحرف؟",["ب","ت","ن"],0),
+Q(K,"أي الحروف الآتية يمتد أسفل السطر عند كتابته؟",["ا","ج","د"],1)]},
+g2:{p:"يُعدّ التطوّع من أجمل صور العطاء، فالمتطوّع يبذل وقته وجهده لخدمة مجتمعه دون أن ينتظر أجرًا. وقد شارك الطلاب في حملة لتنظيف الحي، فازدادت محبتهم لبعضهم وشعروا بقيمة العمل الجماعي.",q:[
+Q(F,"بم وُصف التطوّع في النص؟",["من أجمل صور العطاء","عملًا مأجورًا","أمرًا مُرهقًا"],0),
+Q(F,"ماذا فعل الطلاب بحسب النص؟",["سافروا في رحلة","شاركوا في حملة لتنظيف الحي","أقاموا معرضًا"],1),
+Q(F,"مرادف كلمة «يبذل» في النص:",["يمنع","يخفي","يقدّم"],2),
+Q(N,"الفعل «شارك» في النص فعل:",["ماضٍ","مضارع","أمر"],0),
+Q(N,"علامة نصب «أجرًا» في النص:",["الضمة","الفتحة","الكسرة"],1),
+Q(I,"ما الكتابة الصحيحة؟",["هاؤلاء الطلاب","هأولاء الطلاب","هؤلاء الطلاب"],2),
+Q(I,"ما الكتابة الصحيحة؟",["علماء","علماأ","علمآء"],0),
+Q(K,"أي الحروف الآتية يُكتب بثلاث نقاط فوق الحرف؟",["ج","ش","خ"],1),
+Q(K,"أي الحروف الآتية يُكتب بنقطة تحت الحرف؟",["ج","ح","خ"],0),
+Q(K,"أي الحروف الآتية لا يتصل بما بعده؟",["ز","ن","ف"],0)]}
 }
+/* لإضافة أسبوع جديد: انسخي آخر أسبوع وأضيفي بعده فاصلة ثم الأسبوع الجديد */
 ];
 
-/* نص القراءة - ثاني متوسط */
-const secondGradePassage =
-"الصداقة الحقيقية كنزٌ لا يقدَّر بثمن، فالصديق الوفي يقف بجانبك في السراء والضراء، ويسعى دائمًا لمساعدتك دون انتظار مقابل. لذلك ينبغي على الإنسان أن يُحسن اختيار أصدقائه.";
-
-/* أسئلة ثاني متوسط - متنوعة: فهم قرائي / نحو / إملاء / خط */
-const secondGrade = [
-{
-tag:"فهم قرائي",
-q:"بم وصف الكاتب الصداقة الحقيقية؟",
-a:["عبئًا ثقيلًا","كنزًا لا يقدَّر بثمن","أمرًا عاديًا"],
-correct:1
-},
-{
-tag:"فهم قرائي",
-q:"متى يقف الصديق الوفي بجانبك بحسب النص؟",
-a:["في السراء فقط","في الضراء فقط","في السراء والضراء"],
-correct:2
-},
-{
-tag:"فهم قرائي",
-q:"بم ينصح الكاتب في نهاية النص؟",
-a:["بعدم الثقة بأحد","بإحسان اختيار الأصدقاء","بالابتعاد عن الناس"],
-correct:1
-},
-{
-tag:"نحو",
-q:"ما إعراب كلمة «كنزٌ» في «الصداقة كنزٌ»؟",
-a:["مبتدأ","خبر مرفوع","مفعول به"],
-correct:1
-},
-{
-tag:"نحو",
-q:"«يسعى الصديق لمساعدتك» - الفعل «يسعى» فعل:",
-a:["ماضٍ","مضارع","أمر"],
-correct:1
-},
-{
-tag:"إملاء",
-q:"ما الكتابة الصحيحة لهمزة هذه الكلمة؟",
-a:["اصدقاء","أصدقاء","إصدقاء"],
-correct:1
-},
-{
-tag:"إملاء",
-q:"أي الكلمات الآتية كُتبت بألف لينة صحيحة؟",
-a:["مشى","مشا","مشاء"],
-correct:0
-},
-{
-tag:"خط",
-q:"أي حرف من الحروف الآتية لا يتصل بما بعده مطلقًا؟",
-a:["س","ر","م"],
-correct:1
-},
-{
-tag:"خط",
-q:"كم عدد نقاط حرف «ش»؟",
-a:["واحدة","اثنتان","ثلاث"],
-correct:2
-},
-{
-tag:"خط",
-q:"عند كتابة حرف الواو في وسط الكلمة، فإنه:",
-a:["يتصل بما قبله فقط","يتصل بما بعده فقط","يتصل بما قبله وبما بعده"],
-correct:0
+const GN={1:"أول متوسط",2:"ثاني متوسط"};
+function buildHome(){
+let h="";
+for(let i=WEEKS.length-1;i>=0;i--){
+h+=`<div class="week"><h3>📅 ${WEEKS[i].name}</h3>
+<button class="choice" onclick="startQuiz(${i},1)">🌸 أول متوسط</button>
+<button class="choice" onclick="startQuiz(${i},2)">🌷 ثاني متوسط</button></div>`;
 }
-];
-
-function startQuiz(grade){
-currentGrade = grade;
-let questions;
-let passage;
-if(grade === 1){
-questions = firstGrade;
-passage = firstGradePassage;
-document.getElementById("quizTitle").innerHTML =
-"🌸 اختبار لغتي - أول متوسط";
+document.getElementById("weeks").innerHTML=h;
 }
-else{
-questions = secondGrade;
-passage = secondGradePassage;
-document.getElementById("quizTitle").innerHTML =
-"🌷 اختبار لغتي - ثاني متوسط";
-}
-document.getElementById("studentName").value = "";
-document.getElementById("passageBox").innerHTML =
-"📖 " + passage;
-let form = document.getElementById("quizForm");
-form.innerHTML = "";
-questions.forEach((item,index)=>{
-let html = `
-<div class="question">
-<span class="tag">${item.tag}</span>
-<h3>${index+1}. ${item.q}</h3>
-`;
+function startQuiz(wi,grade){
+sent=false;
+const w=WEEKS[wi], d=w["g"+grade];
+cur={week:w.name,grade:GN[grade],q:d.q};
+document.getElementById("quizTitle").innerHTML=(grade===1?"🌸 ":"🌷 ")+"اختبار لغتي - "+GN[grade]+"<br><small>"+w.name+"</small>";
+document.getElementById("studentName").value="";
+document.getElementById("passageBox").innerHTML="📖 "+d.p;
+document.getElementById("result").innerHTML="";
+let html="";
+d.q.forEach((item,index)=>{
+html+=`<div class="question"><span class="tag">${item.tag}</span><h3>${index+1}. ${item.q}</h3>`;
 item.a.forEach((answer,i)=>{
-html += `
-<label>
-<input type="radio"
-name="q${index}"
-value="${i}">
-${answer}
-</label>
-`;
+html+=`<label><input type="radio" name="q${index}" value="${i}"> ${answer}</label>`;
 });
-html += `</div>`;
-form.innerHTML += html;
+html+=`</div>`;
 });
+document.getElementById("quizForm").innerHTML=html;
 document.getElementById("home").style.display="none";
 document.getElementById("quizPage").style.display="block";
 window.scrollTo(0,0);
 }
-
 function checkAnswers(){
-let name = document.getElementById("studentName").value.trim();
-if(name === ""){
-alert("الرجاء كتابة اسمك أولًا");
-return;
-}
-let questions =
-currentGrade === 1 ? firstGrade : secondGrade;
-let score = 0;
-questions.forEach((item,index)=>{
-let selected =
-document.querySelector(
-'input[name="q'+index+'"]:checked'
-);
-if(selected &&
-Number(selected.value) === item.correct){
-score++;
-}
+let name=document.getElementById("studentName").value.trim();
+if(name===""){alert("الرجاء كتابة اسمك أولًا");return;}
+let score=0;
+cur.q.forEach((item,index)=>{
+let s=document.querySelector('input[name="q'+index+'"]:checked');
+if(s && Number(s.value)===item.correct){score++;}
 });
-document.getElementById("result").innerHTML =
-"🌟 " + name + "، نتيجتك: " + score + " من " + questions.length;
+if(SHEET_URL && !sent){
+sent=true;
+fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},
+body:JSON.stringify({name:name,week:cur.week,grade:cur.grade,score:score,total:cur.q.length})}).catch(()=>{});
 }
-
+document.getElementById("result").innerHTML="🌟 "+name+"، نتيجتك: "+score+" من "+cur.q.length;
+}
 function goHome(){
 document.getElementById("quizPage").style.display="none";
 document.getElementById("home").style.display="block";
-document.getElementById("result").innerHTML="";
 window.scrollTo(0,0);
 }
+buildHome();
 </script>
 </body>
 </html>
