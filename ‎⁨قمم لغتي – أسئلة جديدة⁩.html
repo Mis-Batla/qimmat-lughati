@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>قمم لغتي – أسئلة جديدة</title>
+<style>
+:root{--bg:#f6fbf7;--card:#fff;--tx:#2d503c;--ac:#2f6b49;--pk:#8a304a;--ln:#cfe5d6;--ok:#d8f0e0;--bad:#fbe1e7;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14201a;--card:#1d2c24;--tx:#e3f1e8;--ac:#7fcf9f;--pk:#f0a3b8;--ln:#35503f;--ok:#21452e;--bad:#4a2430}}
+:root[data-theme="dark"]{--bg:#14201a;--card:#1d2c24;--tx:#e3f1e8;--ac:#7fcf9f;--pk:#f0a3b8;--ln:#35503f;--ok:#21452e;--bad:#4a2430}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Tahoma,Arial,sans-serif;line-height:1.8}
+main{max-width:680px;margin:auto;padding:16px}
+h1{color:var(--ac);text-align:center;margin:8px 0}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:14px;margin:12px 0}
+.cat{color:var(--pk);font-weight:bold;font-size:.9em}
+button,input{font:inherit}
+button{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:10px 18px;margin:4px;cursor:pointer}
+.g button{background:var(--card);color:var(--tx);border:2px solid var(--ac)}
+input[type=text]{width:100%;box-sizing:border-box;padding:10px;border:1px solid var(--ln);border-radius:10px;background:var(--card);color:var(--tx)}
+label{display:block;padding:6px 10px;margin:4px 0;border:1px solid var(--ln);border-radius:10px;cursor:pointer}
+.ok{background:var(--ok)}.bad{background:var(--bad)}
+.psg{background:var(--bad);border-radius:10px;padding:10px}
+.big{font-size:1.6em;text-align:center;color:var(--ac);font-weight:bold}
+</style></head><body><main>
+<h1>📚 قمم لغتي</h1>
+<div id="app"></div>
+</main>
+<script>
+const D={
+"أول متوسط":{p:"الوقت كالسيف إن لم تقطعه قطعك. والطالب المجتهد من يحافظ على وقته، فيرتب واجباته، ويبدأ بالأهم قبل المهم، ولا يؤجل عمل اليوم إلى الغد.",q:[
+["فهم قرائي","المقصود بتشبيه الوقت بالسيف أنه:",["سريع المرور فيجب اغتنامه","حاد الشكل","يُستخدم في الحرب"]],
+["فهم قرائي","ضد كلمة «يؤجّل» في النص:",["يعجّل","يؤخّر","يترك"]],
+["نحو","الفاعل في جملة «كتبتِ الطالبةُ الدرسَ» هو:",["الطالبةُ","الدرسَ","كتبتِ"]],
+["نحو","علامة رفع المبتدأ في «العلمُ نورٌ» هي:",["الضمة","الفتحة","الكسرة"]],
+["إملاء","الكلمة المكتوبة بشكل صحيح:",["سؤال","سوأل","سئال"]],
+["إملاء","الكلمة المكتوبة بشكل صحيح:",["مستشفى","مستشفا","مستشفي"]],
+["خط","من أنواع الخطوط العربية:",["النسخ والرقعة","اللاتيني","اليوناني"]],
+["خط","للحصول على خط جميل نحرص على:",["تناسق الحروف وتباعد الكلمات","الكتابة بسرعة كبيرة","الضغط بشدة على القلم"]]]},
+"ثاني متوسط":{p:"القراءة غذاء العقل، فهي تفتح للإنسان أبواب المعرفة، وتنمّي لغته وخياله. ومن أحبّ الكتاب صاحبه طوال حياته، فكان خير رفيق في الوحدة وأوفى صديق في السفر.",q:[
+["فهم قرائي","عبارة «القراءة غذاء العقل» تعني أنها:",["تنمّي العقل كما يغذّي الطعام الجسم","تُشبع الجوع","تُنسي الإنسان تعبه"]],
+["فهم قرائي","مرادف كلمة «أوفى» في النص:",["أصدق","أبعد","أسرع"]],
+["نحو","إعراب «خيرَ» في «كان خيرَ رفيق»:",["خبر كان منصوب","اسم كان مرفوع","فاعل مرفوع"]],
+["نحو","اسم «إنّ» في جملة «إنّ العلمَ نافعٌ»:",["العلمَ","نافعٌ","إنّ"]],
+["إملاء","الكلمة المكتوبة بشكل صحيح:",["جزء","جزئ","جزأ"]],
+["إملاء","الكلمة المكتوبة بشكل صحيح:",["قارئ","قارء","قارئء"]],
+["خط","يتميّز خط الرقعة بأنه:",["سريع وبسيط الحروف ويُستخدم في الكتابة اليومية","كثير الزخارف","يُكتب بالتشكيل الكامل دائمًا"]],
+["خط","الخط الذي تُكتب به المصاحف غالبًا:",["النسخ","الرقعة","الديواني"]]]}};
+const E={"فهم قرائي":"📖","نحو":"✏️","إملاء":"🔤","خط":"🖋️"};
+const app=document.getElementById("app");let name="",grade="",Q=[];
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function home(){app.innerHTML=`<div class="card"><p>اسم الطالبة:</p><input type="text" id="n" placeholder="اكتبي اسمك الثلاثي"><p>اختاري الصف:</p><div class="g">${Object.keys(D).map(g=>`<button data-g="${g}">${g==="أول متوسط"?"🌸":"🌷"} ${g}</button>`).join("")}</div></div>`;
+app.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>{name=document.getElementById("n").value.trim();if(!name){alert("فضلاً اكتبي اسمك أولاً");return}grade=b.dataset.g;start()})}
+function start(){Q=D[grade].q.map(x=>({c:x[0],t:x[1],ans:x[2][0],o:sh(x[2])}));
+app.innerHTML=`<div class="card psg"><b>اقرئي النص:</b><br>${D[grade].p}</div>`+Q.map((q,i)=>`<div class="card"><div class="cat">${E[q.c]} ${q.c}</div><b>${i+1}. ${q.t}</b>${q.o.map(o=>`<label><input type="radio" name="q${i}" value="${o}"> ${o}</label>`).join("")}</div>`).join("")+`<div style="text-align:center"><button id="s">إظهار النتيجة ✅</button></div>`;
+document.getElementById("s").onclick=finish}
+function finish(){let sc=0,by={};
+Q.forEach((q,i)=>{const v=(document.querySelector(`input[name=q${i}]:checked`)||{}).value;q.v=v;by[q.c]=by[q.c]||[0,0];by[q.c][1]++;if(v===q.ans){sc++;by[q.c][0]++}});
+const txt=`نتيجة قمم لغتي\nالاسم: ${name}\nالصف: ${grade}\nالدرجة: ${sc} من ${Q.length}\n`+Object.entries(by).map(([k,v])=>`${k}: ${v[0]}/${v[1]}`).join(" | ");
+app.innerHTML=`<div class="card"><div class="big">${name}<br>${sc} / ${Q.length} ${sc>=Q.length*.8?"🌟":"💪"}</div><p style="text-align:center">${Object.entries(by).map(([k,v])=>`${E[k]} ${k}: ${v[0]}/${v[1]}`).join(" &nbsp;|&nbsp; ")}</p><div style="text-align:center"><button id="cp">📋 نسخ النتيجة وإرسالها للمعلمة</button><button id="rs">إعادة</button></div><pre id="tx" style="white-space:pre-wrap;font-family:inherit">${txt}</pre></div>`+Q.map((q,i)=>`<div class="card ${q.v===q.ans?"ok":"bad"}"><b>${i+1}. ${q.t}</b><br>إجابتك: ${q.v||"لم تجيبي"}${q.v===q.ans?" ✅":`<br>الإجابة الصحيحة: ${q.ans}`}</div>`).join("");
+document.getElementById("rs").onclick=home;
+document.getElementById("cp").onclick=async()=>{try{await navigator.clipboard.writeText(txt);alert("تم النسخ، أرسليها للمعلمة 💕")}catch(e){const r=document.createRange();r.selectNodeContents(document.getElementById("tx"));getSelection().removeAllRanges();getSelection().addRange(r);alert("حددي النص وانسخيه يدويًا")}}}
+home();
+</script></body></html>
