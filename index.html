@@ -13,6 +13,7 @@ h1{text-align:center;color:#246b45;font-size:32px;}
 .week h3{margin:0 0 6px;color:#246b45;text-align:center;}
 .choice{display:block;width:100%;padding:16px;margin:10px 0;border:0;border-radius:14px;background:#246b45;color:white;font-size:19px;cursor:pointer;}
 .choice:hover{opacity:.9;}
+.choice.done{background:#8a9a92;}
 .passage{margin:20px 0;padding:18px;background:#eaf4ee;border-right:5px solid #246b45;border-radius:10px;line-height:1.9;font-size:18px;}
 .question{margin:25px 0;padding:18px;background:#f7faf8;border-radius:14px;}
 .question h3{margin-top:0;}
@@ -20,6 +21,7 @@ h1{text-align:center;color:#246b45;font-size:32px;}
 label{display:block;padding:12px;margin:8px 0;background:white;border-radius:9px;cursor:pointer;}
 label:hover{background:#eaf4ee;}
 button{width:100%;padding:15px;border:0;border-radius:12px;background:#246b45;color:white;font-size:19px;cursor:pointer;margin-top:10px;}
+button:disabled{background:#aab5af;cursor:not-allowed;}
 .back{background:#777;}
 #result{margin-top:20px;padding:18px;text-align:center;font-size:22px;font-weight:bold;border-radius:12px;}
 .nameBox{margin:20px 0 30px 0;}
@@ -43,7 +45,7 @@ button{width:100%;padding:15px;border:0;border-radius:12px;background:#246b45;co
 </div>
 <div class="passage" id="passageBox"></div>
 <form id="quizForm"></form>
-<button onclick="checkAnswers()" type="button">إظهار النتيجة ✅</button>
+<button id="submitBtn" onclick="checkAnswers()" type="button">إظهار النتيجة ✅</button>
 <button onclick="goHome()" type="button" class="back">العودة للرئيسية</button>
 <div id="result"></div>
 </div>
@@ -52,7 +54,7 @@ button{width:100%;padding:15px;border:0;border-radius:12px;background:#246b45;co
 /* ضعي هنا رابط Google Apps Script بين علامتي التنصيص */
 const SHEET_URL = "https://script.google.com/macros/s/AKfycby2EcIcaGyvWpsXV3naiHI6uPTyR8i51rg1V_G4Ns3ULQfQy2WBIvwRIgPgtad-VAefmg/exec";
 let sent = false, cur = null;
-const F="فهم قرائي",N="نحو",I="إملاء",K="خط";
+const F="فهم قرائي",N="نحو",NS="نحو وصرف",I="إملاء",K="خط";
 const Q=(tag,q,a,correct)=>({tag,q,a,correct});
 
 /* ====== الأسابيع: الأقدم أولًا، وتظهر الأحدث في الأعلى ====== */
@@ -106,30 +108,97 @@ Q(I,"ما الكتابة الصحيحة؟",["علماء","علماأ","علمآ�
 Q(K,"أي الحروف الآتية يُكتب بثلاث نقاط فوق الحرف؟",["ج","ش","خ"],1),
 Q(K,"أي الحروف الآتية يُكتب بنقطة تحت الحرف؟",["ج","ح","خ"],0),
 Q(K,"أي الحروف الآتية لا يتصل بما بعده؟",["ز","ن","ف"],0)]}
+},
+{
+name:"الأسبوع ٣",
+shuffle:true,
+g1:{u:"وحدة القيم الإسلامية",p:"الأمانة قيمة إسلامية عظيمة، وهي من الصفات التي اشتهر بها النبي ﷺ قبل البعثة حتى لقّبه قومه بالصادق الأمين. والأمانة لا تقتصر على حفظ الأموال والودائع، بل تشمل إتقان العمل، وحفظ الأسرار، وأداء الواجبات في وقتها. فالطالبة الأمينة تذاكر دروسها وتبتعد عن الغش، والموظف الأمين يؤدي عمله بإخلاص دون انتظار رقيب. وحين تنتشر الأمانة في المجتمع تزداد الثقة بين أفراده، ويعمّ الأمان، وتقلّ الخلافات. أما الخيانة فهي صفة ذميمة تهدم الثقة، وتجعل صاحبها منبوذًا بين الناس.",q:[
+Q(F,"ما الفكرة الرئيسية للقطعة؟",["قصة النبي ﷺ مع قومه","أهمية الأمانة ومجالاتها وأثرها في المجتمع","عقوبة الخائن","واجبات الموظف"],1),
+Q(F,"بماذا لقّب قومُ النبي ﷺ نبيَّهم قبل البعثة؟",["الصادق الأمين","الكريم الرحيم","العالم الحكيم","القوي الأمين"],0),
+Q(F,"من المجالات التي تشملها الأمانة كما ورد في القطعة:",["كثرة الكلام وحسن الحديث","السفر وطلب العلم","إتقان العمل وحفظ الأسرار وأداء الواجبات","التجارة وجمع المال"],2),
+Q(F,"ما ضد كلمة (ذميمة) في القطعة؟",["قبيحة","حميدة","سيئة","ضعيفة"],1),
+Q(F,"(استنتاج) يُفهم من عبارة «دون انتظار رقيب» أن الموظف الأمين:",["لا يحتاج إلى مدير","يعمل لأنه يخاف العقاب فقط","يؤدي عمله لأن ضميره يراقبه ومراقبة الله له","يعمل بسرعة كبيرة"],2),
+Q(F,"(تفكير ناقد) وجدتْ طالبةٌ محفظةً فيها مبلغ من المال في الفصل، فما التصرف الذي يعبّر عن الأمانة؟",["تحتفظ بها لأن صاحبتها أهملتها","تأخذ المبلغ وتعيد المحفظة","تسلّمها للمعلمة لتصل إلى صاحبتها","تتركها مكانها"],2),
+Q(NS,"الفاعل في جملة «حفظتِ الطالبةُ الدرسَ» هو:",["حفظتِ","الطالبةُ","الدرسَ","لا يوجد فاعل"],1),
+Q(NS,"الكلمة التي تُعرب مفعولًا به في قولنا «أحبَّ الناسُ الأمانةَ»:",["الناسُ","أحبَّ","الأمانةَ","لا يوجد"],2),
+Q(NS,"اسم الفاعل من الفعل (كتب) هو:",["مكتوب","كاتب","كتابة","يكتب"],1),
+Q(NS,"جمع كلمة (طالبة) جمع مؤنث سالمًا هو:",["طلاب","طلبة","طالبات","طوالب"],2),
+Q(I,"الكلمة المكتوبة كتابة صحيحة:",["ابتسامه","ابتسامة","ابتسامت","ابتسامى"],1),
+Q(I,"الكلمة المكتوبة كتابة صحيحة:",["رأيس","رءيس","رئيس","ريئس"],2),
+Q(I,"الكلمة المكتوبة كتابة صحيحة:",["مستشفا","مستشفي","مستشفاء","مستشفى"],3),
+Q(K,"أي هذه الحروف ينزل جزء منه تحت السطر عند كتابته؟",["ا","ج","ك","ل"],1),
+Q(K,"من شروط جمال الخط:",["كتابة الكلمات متلاصقة","تغيير حجم الحروف في السطر الواحد","ترك مسافات متساوية بين الكلمات والالتزام بالكتابة على السطر","الإسراع في الكتابة دون اهتمام بالشكل"],2)]},
+g2:{u:"وحدة تقنيات",p:"أصبحت التقنية الحديثة جزءًا لا يتجزأ من حياتنا اليومية؛ فبضغطة زر نتواصل مع أهلنا في أي مكان، ونتعلم عن بُعد، وننجز معاملاتنا دون الذهاب إلى المكاتب. وقد ساعدت التطبيقات الذكية على توفير الوقت والجهد، وفتحت أمام الشباب أبوابًا جديدة للإبداع والعمل. غير أن الإفراط في استخدام الأجهزة قد يسبب العزلة، ويُضعف العلاقات الأسرية، ويؤثر في الصحة والنوم. لذلك يرى المختصون أن الاستفادة المثلى من التقنية تكمن في الاعتدال، وتنظيم الوقت، واختيار المحتوى النافع.",q:[
+Q(F,"ما الفكرة الرئيسية للقطعة؟",["أنواع التطبيقات الذكية","فوائد التقنية وأضرارها وضرورة الاعتدال في استخدامها","طرق التعلم عن بُعد","خطر الأجهزة على النوم"],1),
+Q(F,"ما الذي أصبح بالإمكان إنجازه «دون الذهاب إلى المكاتب» كما في القطعة؟",["التعلم","التواصل مع الأهل","المعاملات","العمل الإبداعي"],2),
+Q(F,"من أضرار الإفراط في استخدام الأجهزة التي ذكرتها القطعة:",["ارتفاع تكلفة المعيشة","العزلة وضعف العلاقات الأسرية","قلة الإبداع","ضعف البصر فقط"],1),
+Q(F,"ما ضد كلمة (يُضعف) في القطعة؟",["يوهن","يقلّل","يقوّي","يؤخر"],2),
+Q(F,"(استنتاج) يُفهم من قول المختصين إن الاستفادة المثلى «تكمن في الاعتدال» أن:",["التقنية ضارة ويجب تركها","التقنية نافعة دائمًا مهما أكثرنا منها","الضرر يأتي من طريقة الاستخدام لا من التقنية ذاتها","على الشباب ألا يستخدموا التطبيقات"],2),
+Q(F,"(تفكير ناقد) طالبة تقضي ست ساعات يوميًا في الألعاب الإلكترونية وتشكو من الأرق، فأنسب اقتراح لها:",["حذف كل التطبيقات من جهازها","تحديد وقت يومي للألعاب وممارسة نشاط آخر نافع","شراء جهاز أحدث","السهر لإنهاء واجباتها بعد اللعب"],1),
+Q(NS,"خبر (كان) في جملة «كان الجوُّ جميلًا»:",["كان","الجوُّ","جميلًا","لا يوجد"],2),
+Q(NS,"اسم (إنّ) في جملة «إنّ العلمَ نورٌ»:",["إنّ","العلمَ","نورٌ","لا يوجد"],1),
+Q(NS,"اسم المفعول من الفعل (فتح) هو:",["فاتح","فتّاح","مفتوح","فتح"],2),
+Q(NS,"الجملة التي فيها فعل مضارع مجزوم:",["يذهبُ الطالب إلى المدرسة","لن يذهبَ الطالب إلى المدرسة","لم يذهبْ الطالب إلى المدرسة","ذهب الطالب إلى المدرسة"],2),
+Q(I,"الكلمة المكتوبة كتابة صحيحة:",["انتضار","انتظار","إنتضار","إنتظار"],1),
+Q(I,"الكلمة المكتوبة كتابة صحيحة:",["إستخدام","أستخدام","استخدام","ستخدام"],2),
+Q(I,"الكلمة المكتوبة كتابة صحيحة:",["جزؤ","جزئ","جزأ","جزء"],3),
+Q(K,"أي هذه الحروف يرتفع فوق السطر عند كتابته؟",["ن","ر","ظ","م"],2),
+Q(K,"من خصائص خط الرقعة:",["كثرة الزخارف والتشكيل","البساطة والسرعة في الكتابة","كبر حجم الحروف","استخدامه في المخطوطات الفنية فقط"],1)]}
 }
 /* لإضافة أسبوع جديد: انسخي آخر أسبوع وأضيفي بعده فاصلة ثم الأسبوع الجديد */
 ];
 
 const GN={1:"أول متوسط",2:"ثاني متوسط"};
+
+/* ====== حفظ حالة الحل (مرة واحدة لكل اختبار) ====== */
+function doneKey(wi,g){return "qimmat_done_"+WEEKS[wi].name+"_"+g;}
+function getDone(wi,g){
+try{const v=localStorage.getItem(doneKey(wi,g));return v?JSON.parse(v):null;}catch(e){return null;}
+}
+function setDone(wi,g,info){
+try{localStorage.setItem(doneKey(wi,g),JSON.stringify(info));}catch(e){}
+}
+function shuffle(arr){
+for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+return arr;
+}
+
+function btn(wi,g,icon){
+const d=getDone(wi,g);
+if(d){return `<button class="choice done" onclick="startQuiz(${wi},${g})">✅ ${GN[g]} - تم الحل (${d.score}/${d.total})</button>`;}
+return `<button class="choice" onclick="startQuiz(${wi},${g})">${icon} ${GN[g]}</button>`;
+}
 function buildHome(){
 let h="";
 for(let i=WEEKS.length-1;i>=0;i--){
-h+=`<div class="week"><h3>📅 ${WEEKS[i].name}</h3>
-<button class="choice" onclick="startQuiz(${i},1)">🌸 أول متوسط</button>
-<button class="choice" onclick="startQuiz(${i},2)">🌷 ثاني متوسط</button></div>`;
+h+=`<div class="week"><h3>📅 ${WEEKS[i].name}</h3>${btn(i,1,"🌸")}${btn(i,2,"🌷")}</div>`;
 }
 document.getElementById("weeks").innerHTML=h;
 }
 function startQuiz(wi,grade){
+const prev=getDone(wi,grade);
+if(prev){
+alert("سبق أن حللتِ هذا الاختبار"+(prev.name?" باسم "+prev.name:"")+" ونتيجتك "+prev.score+" من "+prev.total+".\nلا يمكن إعادة الاختبار.");
+return;
+}
 sent=false;
 const w=WEEKS[wi], d=w["g"+grade];
-cur={week:w.name,grade:GN[grade],q:d.q};
-document.getElementById("quizTitle").innerHTML=(grade===1?"🌸 ":"🌷 ")+"اختبار لغتي - "+GN[grade]+"<br><small>"+w.name+"</small>";
-document.getElementById("studentName").value="";
+let qs=d.q;
+if(w.shuffle){
+qs=d.q.map(item=>{
+const order=shuffle(item.a.map((_,i)=>i));
+return {tag:item.tag,q:item.q,a:order.map(i=>item.a[i]),correct:order.indexOf(item.correct)};
+});
+}
+cur={wi:wi,grade:grade,week:w.name,gradeName:GN[grade],q:qs,submitted:false};
+document.getElementById("quizTitle").innerHTML=(grade===1?"🌸 ":"🌷 ")+"اختبار لغتي - "+GN[grade]+"<br><small>"+w.name+(d.u?" - "+d.u:"")+"</small>";
+const nameInput=document.getElementById("studentName");
+nameInput.value="";nameInput.disabled=false;
+document.getElementById("submitBtn").disabled=false;
 document.getElementById("passageBox").innerHTML="📖 "+d.p;
 document.getElementById("result").innerHTML="";
 let html="";
-d.q.forEach((item,index)=>{
+qs.forEach((item,index)=>{
 html+=`<div class="question"><span class="tag">${item.tag}</span><h3>${index+1}. ${item.q}</h3>`;
 item.a.forEach((answer,i)=>{
 html+=`<label><input type="radio" name="q${index}" value="${i}"> ${answer}</label>`;
@@ -142,23 +211,34 @@ document.getElementById("quizPage").style.display="block";
 window.scrollTo(0,0);
 }
 function checkAnswers(){
+if(!cur || cur.submitted){return;}
 let name=document.getElementById("studentName").value.trim();
 if(name===""){alert("الرجاء كتابة اسمك أولًا");return;}
-let score=0;
+let score=0, unanswered=0;
 cur.q.forEach((item,index)=>{
 let s=document.querySelector('input[name="q'+index+'"]:checked');
-if(s && Number(s.value)===item.correct){score++;}
+if(!s){unanswered++;}
+else if(Number(s.value)===item.correct){score++;}
 });
+let msg="بعد إظهار النتيجة لا يمكنك إعادة هذا الاختبار.";
+if(unanswered>0){msg="لم تجيبي عن "+unanswered+" سؤال.\n"+msg;}
+if(!confirm(msg+"\nهل تريدين المتابعة؟")){return;}
+cur.submitted=true;
+setDone(cur.wi,cur.grade,{name:name,score:score,total:cur.q.length});
+document.getElementById("submitBtn").disabled=true;
+document.getElementById("studentName").disabled=true;
+document.querySelectorAll('#quizForm input').forEach(el=>{el.disabled=true;});
 if(SHEET_URL && !sent){
 sent=true;
 fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},
-body:JSON.stringify({name:name,week:cur.week,grade:cur.grade,score:score,total:cur.q.length})}).catch(()=>{});
+body:JSON.stringify({name:name,week:cur.week,grade:cur.gradeName,score:score,total:cur.q.length})}).catch(()=>{});
 }
 document.getElementById("result").innerHTML="🌟 "+name+"، نتيجتك: "+score+" من "+cur.q.length;
 }
 function goHome(){
 document.getElementById("quizPage").style.display="none";
 document.getElementById("home").style.display="block";
+buildHome();
 window.scrollTo(0,0);
 }
 buildHome();
